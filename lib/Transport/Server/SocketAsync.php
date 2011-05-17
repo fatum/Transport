@@ -40,6 +40,7 @@ class SocketAsync extends \Transport\Server
             }
             
             $this->execute($read);
+            $this->getProvider()->getLogger()->dump();
         }
         while(true);
     }
@@ -144,11 +145,11 @@ class SocketAsync extends \Transport\Server
     {
         foreach ($this->_clients as $client) {
             if (is_resource($client)) {
-                socket_close($client);
+                @socket_close($client);
             }
         }
         
-        socket_close($this->_socket);
+        @socket_close($this->_socket);
         exit(0);
     }
 }

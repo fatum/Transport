@@ -12,8 +12,8 @@ abstract class Logger
     const DEBUG     = 1;
     const ACCESS    = 2;
     
-    private $_messages;
-    private $_logLevel = self::ACCESS;
+    protected   $_messages;
+    private     $_logLevel = self::ACCESS;
     
     public function setLevel($level)
     {

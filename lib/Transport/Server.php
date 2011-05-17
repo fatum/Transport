@@ -36,8 +36,11 @@ abstract class Server
         if ($provider instanceof Provider) {
             $this->_provider = $provider;
         }
-        else {
+        elseif (is_string($provider)) {
             $this->_provider = Provider::loadProvider($provider);
+        } 
+        else {
+            throw new \Transport\Exception("Provider does not valid param: ". $provider);
         }
     }
     
