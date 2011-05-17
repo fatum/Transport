@@ -1,10 +1,4 @@
-cat <?php
-
-/**
- * Description of Exception
- *
- * @author fatum
- */
+<?php
 namespace Transport\Logger;
 
 class Exception extends \Exception

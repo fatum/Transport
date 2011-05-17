@@ -7,7 +7,7 @@
  */
 namespace Custom;
 
-class RootCommand extends \Transport\Task
+class Root extends \Transport\Task
 {
     public function execute()
     {

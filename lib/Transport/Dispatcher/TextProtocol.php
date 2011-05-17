@@ -5,9 +5,9 @@
  *
  * @author fatum
  */
-namespace Transport\Dispatcher;
+namespace   Transport\Dispatcher;
 
-class TextProtocol 
+class TextProtocol extends \Transport\Dispatcher
 {
     public function __construct($string)
     {
@@ -36,23 +36,8 @@ class TextProtocol
             $arg        = null;
         }
         
-        $this->_object = $this->getCommandClass($command, array($arg));
-    }
-    
-    public function getCommandClass($command, array $args)
-    {
-        $commandClass = "Transport\\Task\\". ucfirst($command);
-        
-        if (!class_exists($commandClass)) {
-            throw new Exception("This command '$command' does not found..");
-        }
-        
-        $object = new $commandClass($args);
-        if (!$object instanceof \Transport\Task) {
-            throw new Exception("This object '".  get_class($object)."' does not instance of Task..");
-        }
-        
-        return $object;
+        $task           = $this->getCommandClass($command, array($arg));
+        $this->_object  = $task;
     }
 }
 

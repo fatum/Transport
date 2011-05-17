@@ -6,11 +6,11 @@ require realpath(TRANSPORT_ROOT."/lib/Transport/Autoloader.php");
 
 $autoloader = new Transport\Autoloader();
 
-$provider = new Transport\Provider\Socket();
-$provider->init(
-            Transport\Config::loadConfig("asyncServer.php")
-        );
+//$provider = new Transport\Provider\Socket();
+//$provider->init(
+//            Transport\Config::loadConfig("asyncServer.php")
+//        );
 
-//$config = Transport\Config::loadConfig("asyncServer.php");
-//$app = new Transport\Application($config);
-//$app->runServer();
+$config = Transport\Config::loadConfig("asyncServer.php");
+$app = new Transport\Application($config);
+$app->runServer();

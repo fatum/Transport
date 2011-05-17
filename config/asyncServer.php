@@ -1,13 +1,16 @@
 <?php
 return array(
-    "server"    => "Transport\\Server\\AsyncServer",
-    "provider"  => "Transport\\Provider\\",
+    "server"    => array(
+        "class"     => "Transport\\Server\\SocketAsync",
+        "host"      => "localhost",
+        "port"      => 1001
+    ),
+    "provider"  => "Transport\\Provider\\Socket",
     "logger"    => array(
         "class" => "Transport\\Logger\\File",
-        "file"  => "/tmp/app.log"
-    ),
-    "host"      => "localhost",
-    "port"      => 1000
-    
+        "file"  => "/tmp/app.log",
+        "verbose"=> true,
+        "level" => \Transport\Logger::DEBUG
+    ),    
 );
 ?>

@@ -14,12 +14,12 @@ class Application
     protected $_logger;
 
     public function __construct(Config $config)
-    {        
+    {
         foreach ($config as $method => $options) {
-            if (method_exists($this, $method)) {
-                
-                $this->$method($options);
-                unset($config[$method]);
+            $methodName = "set".ucfirst($method);
+            
+            if (method_exists($this, $methodName)) {
+                $this->$methodName($options);
             }
         }
         
@@ -69,7 +69,7 @@ class Application
     
     public function setServer($server)
     {
-        $this->_server = Server::loadClass($server);
+        $this->_server = Server::loadClass($server["class"], $server);
     }
     
     public function getServer()

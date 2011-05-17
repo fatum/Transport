@@ -16,6 +16,8 @@ class Socket extends \Transport\Provider
     {
         $dispatcher = new Dispatcher\TextProtocol($string);
         $task       = $dispatcher->getTask();
+        
+        $this->getLogger()->add("We handle task: ". get_class($task));
     }
 }
 

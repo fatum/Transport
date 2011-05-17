@@ -26,9 +26,16 @@ class SocketAsync extends \Transport\Server
     public function start()
     {   
         $this->_clients = range(0, self::MAX_CONNECTION);
-        $this->_socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+        $this->_socket  = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         
-        socket_bind         ($this->_socket, "localhost", 1000);
+        $config         = $this->getConfig();
+        $logger         = $this->getProvider()->getLogger();
+        
+        $bindRes = @socket_bind         ($this->_socket, $config["host"], $config["port"]);
+        if (empty($bindRes)) {            
+            throw new Exception("Cannot bind to socket: ". socket_strerror(socket_last_error()));
+        }
+        
         socket_listen       ($this->_socket);
         socket_set_nonblock ($this->_socket);
         
@@ -40,7 +47,7 @@ class SocketAsync extends \Transport\Server
             }
             
             $this->execute($read);
-            $this->getProvider()->getLogger()->dump();
+            $logger->dump();
         }
         while(true);
     }
@@ -91,7 +98,6 @@ class SocketAsync extends \Transport\Server
         $read[0]  = $this->_socket;
         foreach (range(0, self::MAX_CONNECTION) as $client) {
             if (is_resource($this->_clients[$client])) {
-                echo "Add to select #". $client, PHP_EOL;
                 $read[$client+1] = $this->_clients[$client];
             }
         }
@@ -134,11 +140,13 @@ class SocketAsync extends \Transport\Server
     
     public function write( &$socket, $data)
     {
-        if (!is_string($data)) {
-            $data = serialize($data);
-        }
+        if ($data) {
+            if (!is_string($data)) {
+                $data = serialize($data);
+            }
         
-        socket_write($socket, $data);
+            socket_write($socket, $data);
+        }
     }
     
     public function shutdown()

@@ -28,18 +28,24 @@ class File extends \Transport\Logger
     {
         $messages = "";
         
-        foreach ($this->_messages as $message) {
-            $message .= $message.PHP_EOL;
+        foreach ($this->_messages as $key => $message) {
+            $messages .= $message.PHP_EOL;
+            unset($this->_messages[$key]);
         }
-        
+                
         $filename = $this->getFile();
         if (empty($filename)) {
             throw new Exception("You need set file for logging!");
         }
         
-        $res = @file_put_contents($filename, $message, FILE_APPEND);
-        if (!$res) {
-            throw new Exception("Can't write to file: ". $filename);
+        if (!is_writable($filename)) {
+            throw new Exception("Log file is not writable: ". $filename);
+        }
+        
+        file_put_contents($filename, $messages, FILE_APPEND);
+        
+        if ($this->getVerbose()) {
+            echo $messages;
         }
     }
 }

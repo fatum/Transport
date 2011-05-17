@@ -12,7 +12,7 @@ abstract class Server
     protected $_config;    
     protected $_provider;
 
-    public function __construct(Config $config)
+    public function __construct($config=array())
     {        
         foreach ($config as $method => $options) {
             if (method_exists($this, $method)) {
@@ -25,10 +25,14 @@ abstract class Server
         $this->setConfig($config);
     }
     
-    public static function loadClass($server)
+    public static function loadClass($server, $config=array())
     {
-        $class = "Transport\\Server\\". ucfirst($server);
-        return new $class();
+        if (strstr($server, "Transport\\")) {
+            $class = $server;
+        }else{
+            $class = "Transport\\Server\\". ucfirst($server);
+        }
+        return new $class($config);
     }
 
     public function setProvider($provider)
@@ -59,9 +63,9 @@ abstract class Server
         return $this->_config;
     }
 
-    public function setConfig(Config $config)
+    public function setConfig($config)
     {
-        $this->_config;
+        $this->_config = $config;
     }
     
     public function checkMemoryLimit()

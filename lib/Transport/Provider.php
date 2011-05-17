@@ -28,12 +28,15 @@ abstract class Provider
      */
     public static function loadProvider($provider)
     {
-        $class = "Transport\\Provider\\". ucfirst($provider);
-        return new $class;
+        if (strstr($provider, "Transport\\")) {
+            $class = $provider;
+        }else{
+            $class = "Transport\\Provider\\". ucfirst($provider);
+        }
+        return new $class();
     }
 
     abstract function handle($string);
-    abstract function init(\Transport\Config $config);
 }
 
 ?>
