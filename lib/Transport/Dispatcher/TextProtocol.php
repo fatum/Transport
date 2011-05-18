@@ -37,7 +37,7 @@ class TextProtocol extends \Transport\Dispatcher
         }
         
         $task           = $this->getCommandClass($command, array($arg));
-        $this->_object  = $task;
+        $this->setTask($task);
     }
 }
 

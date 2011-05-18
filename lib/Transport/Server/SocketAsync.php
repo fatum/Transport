@@ -70,13 +70,13 @@ class SocketAsync extends \Transport\Server
                 catch (\Transport\Dispatcher\Exception $e) {
                     $this->write(
                          $socket,   
-                         "Some error occured: ". 
+                         "Some error occured in dispatcher: ". 
                          $e->getMessage(). PHP_EOL);
                 }
                 catch (Task\Exception $e) {
                     $this->write(
                          $socket,   
-                         "Some error occured: ". 
+                         "Some error occured in task: ". 
                          $e->getMessage(). PHP_EOL);
                 }
                 catch (Exception $e) {

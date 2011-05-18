@@ -13,13 +13,18 @@ abstract class Dispatcher
      *
      * @var Transport\Task
      */
-    protected $_object;
+    protected $_task;
 
     abstract function dispatch($data);
     
+    public function setTask(Task $task)
+    {
+        $this->_task = $task;
+    }
+    
     public function getTask()
     {
-        return $this->_object;
+        return $this->_task;
     }
     
     protected function getCommandClass($command, array $args)
