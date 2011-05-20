@@ -79,7 +79,7 @@ class SocketAsync extends \Transport\Server
                          "Some error occured in task: ". 
                          $e->getMessage(). PHP_EOL);
                 }
-                catch (Exception $e) {
+                catch (\Exception $e) {
                     $this->write($socket,
                          "Some error occured: ". 
                          $e->getMessage(). PHP_EOL);
